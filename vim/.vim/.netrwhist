@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/brent/dotfiles/nvim/.config/nvim/.github'
+let g:netrw_dirhist_4='/home/brent/.oh-my-zsh/plugins/git-commit'
+let g:netrw_dirhist_3='/home/brent/.oh-my-zsh/plugins'
+let g:netrw_dirhist_2='/home/brent/.oh-my-zsh'
+let g:netrw_dirhist_1='/mnt/c/projects/adventure-journal'
