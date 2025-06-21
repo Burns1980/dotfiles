@@ -76,25 +76,29 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
+        per_filetype = {
+          sql = { 'snippets', 'dadbod', 'buffer' },
+        },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
         },
       },
 
       -- Fixes issue where ":!" causes neovim to freeze because it is reading the
       -- PATH which includes all Windows paths.
-      cmdline = {
-        sources = {
-          providers = {
-            cmdline = {
-              enabled = function()
-                return vim.fn.getcmdline():sub(1, 1) ~= '!'
-              end,
-            },
-          },
-        },
-      },
+      -- cmdline = {
+      --   sources = {
+      --     providers = {
+      --       cmdline = {
+      --         enabled = function()
+      --           return vim.fn.getcmdline():sub(1, 1) ~= '!'
+      --         end,
+      --       },
+      --     },
+      --   },
+      -- },
 
       snippets = { preset = 'luasnip' },
 

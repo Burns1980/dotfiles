@@ -110,3 +110,4 @@ export NVM_DIR="$HOME/.nvm"
 
 export PGDATABASE_URL="postgres://postgres:postgres@localhost:54322/postgres"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PATH="$PATH:/opt/nvim/"
