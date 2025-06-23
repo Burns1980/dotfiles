@@ -1,5 +1,17 @@
 -- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
+local opts = { noremap = true, silent = true }
+local function mergeTable(t1, t2)
+  local result = {}
+
+  for k, v in pairs(t1) do
+    result[k] = v
+  end
+  for k, v in pairs(t2) do
+    result[k] = v
+  end
+
+  return result
+end
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -7,6 +19,28 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Select all
+vim.keymap.set('n', '<C-a>', 'gg<S-v>G', { desc = 'Select all' })
+
+-- Save file
+vim.keymap.set('n', '<leader>w', ':w<CR>', mergeTable(opts, { desc = 'Save file' }))
+
+-- Jumplist
+vim.keymap.set('n', '<leader>J', ':jump<CR>', mergeTable(opts, { desc = 'Open jumplist' }))
+
+--Open new tab
+vim.keymap.set('n', 'te', ':tabedit', mergeTable(opts, { desc = 'Open a new tab ' }))
+
+-- Split window
+vim.keymap.set('n', 'ss', ':split<CR>', mergeTable(opts, { desc = 'Split current window horizontally' }))
+vim.keymap.set('n', 'sv', ':vsplit<CR>', mergeTable(opts, { desc = 'Split current window vertically' }))
+
+-- Move window
+vim.keymap.set('n', 'sh', '<C-w>H', mergeTable(opts, { desc = 'Move current window to far left' }))
+vim.keymap.set('n', 'sl', '<C-w>L', mergeTable(opts, { desc = 'Move current window to far right' }))
+vim.keymap.set('n', 'sj', '<C-w>J', mergeTable(opts, { desc = 'Move current window to far bottom' }))
+vim.keymap.set('n', 'sk', '<C-w>K', mergeTable(opts, { desc = 'Move current window to far top' }))
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
