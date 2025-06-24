@@ -1,4 +1,5 @@
 -- [[ Basic Keymaps ]]
+--
 local opts = { noremap = true, silent = true }
 local function mergeTable(t1, t2)
   local result = {}

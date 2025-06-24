@@ -26,6 +26,15 @@ return {
         },
         opts = { skip = true },
       },
+      {
+        filter = {
+          kind = 'list_cmd',
+        },
+        view = 'messages',
+        opts = {
+          enter = true,
+        },
+      },
     },
   },
   dependencies = {
