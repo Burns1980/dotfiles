@@ -32,6 +32,8 @@ return {
         search_method = 'cover_or_next',
       }
 
+      require('mini.sessions').setup {}
+
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
