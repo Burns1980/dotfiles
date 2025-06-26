@@ -32,7 +32,40 @@ return {
         search_method = 'cover_or_next',
       }
 
-      require('mini.sessions').setup {}
+      require('mini.sessions').setup()
+
+      vim.keymap.set('n', '<leader>ws', function()
+        MiniSessions.select()
+      end, { desc = 'Select Session' })
+
+      vim.keymap.set('n', '<leader>wl', function()
+        MiniSessions.read()
+      end, { desc = 'Select Local Session' })
+
+      vim.keymap.set('n', '<leader>wW', function()
+        local name = vim.fn.input 'Session name: '
+        MiniSessions.write(name)
+      end, {
+        desc = 'Write Session Name',
+      })
+
+      vim.keymap.set('n', '<leader>ww', function()
+        MiniSessions.write()
+      end, {
+        desc = 'Write Local Session',
+      })
+
+      vim.keymap.set('n', '<leader>wg', function()
+        print(vim.inspect(MiniSessions.detected))
+      end, { desc = 'Get Sessions Table' })
+
+      vim.keymap.set('n', '<leader>wD', function()
+        local name = vim.fn.input 'Delete Session: '
+        MiniSessions.delete(name)
+      end, {
+        desc = 'Delete Session by Name',
+      })
+
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,

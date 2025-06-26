@@ -46,7 +46,7 @@ return {
   keys = {
     -- notifier
     {
-      '<leader>nt',
+      '<leader>tt',
       function()
         Snacks.terminal()
       end,

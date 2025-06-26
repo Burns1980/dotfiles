@@ -62,6 +62,11 @@ return {
       spec = {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]oggle' },
+        { '<leader>w', group = '[W]orkspace Sessions' },
+        { '<leader>o', group = '[O]ther' },
+        { '<leader>n', group = '[N]otifications' },
+        { '<leader>g', group = '[G]it' },
+        { '<leader>d', group = '[D]atabase' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },

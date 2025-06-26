@@ -22,9 +22,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Select all
 vim.keymap.set('n', '<C-a>', 'gg<S-v>G', { desc = 'Select all' })
 
--- Save file
-vim.keymap.set('n', '<leader>w', ':w<CR>', mergeTable(opts, { desc = 'Save file' }))
-
 -- Jumplist
 vim.keymap.set('n', '<leader>J', ':jump<CR>', mergeTable(opts, { desc = 'Open jumplist' }))
 
