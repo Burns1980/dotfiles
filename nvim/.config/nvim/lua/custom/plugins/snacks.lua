@@ -188,5 +188,27 @@ return {
       end,
       desc = 'Quickfix List',
     },
+    -- other
+    {
+      '<leader>obd',
+      function()
+        Snacks.bufdelete()
+      end,
+      desc = 'Delete Buffer',
+    },
+    {
+      '<leader>obo',
+      function()
+        Snacks.bufdelete.other()
+      end,
+      desc = 'Delete All Except Cur',
+    },
+    {
+      '<leader>oba',
+      function()
+        Snacks.bufdelete.other()
+      end,
+      desc = 'Delete All Except Cur',
+    },
   },
 }
