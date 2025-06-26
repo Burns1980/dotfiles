@@ -131,5 +131,62 @@ return {
       end,
       desc = 'Lazygit',
     },
+    -- search
+    {
+      '<leader>s"',
+      function()
+        Snacks.picker.registers()
+      end,
+      desc = 'Registers',
+    },
+    {
+      '<leader>sc',
+      function()
+        Snacks.picker.command_history()
+      end,
+      desc = 'Command History',
+    },
+    {
+      '<leader>sC',
+      function()
+        Snacks.picker.commands()
+      end,
+      desc = 'Commands',
+    },
+    {
+      '<leader>sD',
+      function()
+        Snacks.picker.diagnostics_buffer()
+      end,
+      desc = 'Buffer Diagnostics',
+    },
+    {
+      '<leader>sj',
+      function()
+        Snacks.picker.jumps()
+      end,
+      desc = 'Jumps',
+    },
+    {
+      '<leader>sk',
+      function()
+        Snacks.picker.keymaps()
+      end,
+      desc = 'Keymaps',
+    },
+    {
+      '<leader>sm',
+      function()
+        Snacks.picker.marks()
+      end,
+      desc = 'Marks',
+    },
+    {
+      '<leader>sq',
+      function()
+        Snacks.picker.qflist()
+      end,
+      desc = 'Quickfix List',
+    },
   },
 }
