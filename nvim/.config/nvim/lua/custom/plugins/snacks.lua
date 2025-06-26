@@ -206,9 +206,9 @@ return {
     {
       '<leader>oba',
       function()
-        Snacks.bufdelete.other()
+        Snacks.bufdelete.all()
       end,
-      desc = 'Delete All Except Cur',
+      desc = 'Delete All',
     },
   },
 }
