@@ -40,11 +40,23 @@ return {
         javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         json = { 'prettierd', 'prettier', stop_after_first = true },
-        sql = { 'pg_format' },
+        sql = { 'sql_formatter', 'pg_format', stop_after_first = true },
       },
       formatters = {
+        sql_formatter = {
+          exe = 'sql-formatter',
+        },
         pg_format = {
-          prepend_args = { '--spaces', '2' },
+          prepend_args = {
+            '--spaces',
+            '2',
+            '--no-space-function',
+            '--wrap-limit',
+            '80',
+            '--nogrouping',
+            '--keep-newline',
+            '--comma-break',
+          },
         },
       },
     },

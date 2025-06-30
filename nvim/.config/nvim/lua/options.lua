@@ -19,6 +19,8 @@ vim.opt.textwidth = 80
 vim.opt.linebreak = true
 vim.opt.formatoptions:append 't'
 
+vim.opt.viewoptions:remove 'options'
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
