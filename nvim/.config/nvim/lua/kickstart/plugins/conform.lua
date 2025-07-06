@@ -41,6 +41,7 @@ return {
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         json = { 'prettierd', 'prettier', stop_after_first = true },
         sql = { 'sql_formatter', 'pg_format', stop_after_first = true },
+        yaml = { 'prettierd' },
       },
       formatters = {
         sql_formatter = {
