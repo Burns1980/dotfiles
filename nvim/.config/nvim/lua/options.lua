@@ -19,6 +19,8 @@ vim.opt.textwidth = 80
 vim.opt.linebreak = true
 vim.opt.formatoptions:append 't'
 
+vim.opt.laststatus = 3
+
 vim.opt.viewoptions:remove 'options'
 
 -- Sync clipboard between OS and Neovim.
