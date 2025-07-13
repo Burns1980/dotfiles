@@ -14,7 +14,7 @@ local remember_folds_augroup = augroup('RememberFolds', { clear = true })
 
 autocmd('BufWinLeave', {
   group = remember_folds_augroup,
-  pattern = '*',
+  pattern = {'*.tsx', '*.ts', '*.js', '*.jsx', '*.json', '*.sql', '*.toml', '*.yml', '*.css', '*.lua'},
   callback = function()
     if vim.bo.buftype == '' and vim.fn.bufname '' then
       vim.cmd 'mkview'
@@ -24,7 +24,7 @@ autocmd('BufWinLeave', {
 
 autocmd('BufWinEnter', {
   group = remember_folds_augroup,
-  pattern = '*', -- Apply to all files
+  pattern = {'*.tsx', '*.ts', '*.js', '*.jsx', '*.json', '*.sql', '*.toml', '*.yml', '*.css', '*.lua'},
   callback = function()
     if vim.bo.buftype == '' and vim.fn.bufname '' then
       vim.cmd 'silent! loadview'

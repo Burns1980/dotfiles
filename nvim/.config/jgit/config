@@ -1,0 +1,3 @@
+[filesystem "Homebrew|24.0.1|/dev/sdd"]
+	timestampResolution = 2652 nanoseconds
+	minRacyThreshold = 7959 microseconds
