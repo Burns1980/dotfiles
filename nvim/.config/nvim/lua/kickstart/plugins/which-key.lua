@@ -67,6 +67,7 @@ return {
         { '<leader>n', group = '[N]otifications' },
         { '<leader>g', group = '[G]it' },
         { '<leader>d', group = '[D]atabase' },
+        { '<leader>a', group = '[A]i' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },

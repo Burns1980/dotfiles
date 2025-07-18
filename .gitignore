@@ -1,1 +1,10 @@
 .zsh_secrets
+
+# the following will only allow nvim/.config/nvim/ files and folders to be
+# tracked
+nvim/*
+!nvim/.config/
+nvim/.config/*
+!nvim/.config/nvim/
+
+copilot-chat/

@@ -4,6 +4,10 @@ return {
     event = 'VimEnter',
     version = '1.*',
     dependencies = {
+      { 'fang2hou/blink-copilot', opts = {
+        max_completions = 3,
+        max_attempts = 4,
+      } },
       -- Snippet Engine
       {
         'L3MON4D3/LuaSnip',
@@ -58,7 +62,6 @@ return {
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
         preset = 'default',
-
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       },
@@ -72,15 +75,22 @@ return {
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        menu = { border = 'single' },
+        documentation = { auto_show = true, window = { border = 'single' }, auto_show_delay_ms = 500 },
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer', 'copilot' },
         per_filetype = {
           sql = { 'snippets', 'dadbod', 'buffer' },
         },
         providers = {
+          copilot = {
+            name = 'copilot',
+            module = 'blink-copilot',
+            score_offset = 100,
+            async = true,
+          },
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
         },

@@ -32,7 +32,26 @@ return {
         search_method = 'cover_or_next',
       }
 
-      require('mini.sessions').setup()
+      require('mini.sessions').setup {
+        autoread = false,
+        autowrite = false,
+        -- hooks = {
+        --   pre = {
+        --     write = function()
+        --       for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+        --         local name = vim.api.nvim_buf_get_name(bufnr)
+        --         if name ~= '' then
+        --           -- If there is *no* extension at end of filename…
+        --           if not name:match '%.%w+$' then
+        --             -- delete it so mksession won't save it
+        --             vim.api.nvim_buf_delete(bufnr, { force = true })
+        --           end
+        --         end
+        --       end
+        --     end,
+        --   },
+        -- },
+      }
 
       vim.keymap.set('n', '<leader>ws', function()
         MiniSessions.select()
@@ -66,6 +85,9 @@ return {
         desc = 'Delete Session by Name',
       })
 
+      vim.keymap.set('n', '<leader>wL', function()
+        MiniSessions.get_latest()
+      end, { desc = 'Select Latest Session' })
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
