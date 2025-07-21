@@ -80,11 +80,19 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer', 'copilot' },
+        default = { 'lsp', 'path', 'buffer', 'snippets' },
         per_filetype = {
           sql = { 'snippets', 'dadbod', 'buffer' },
         },
         providers = {
+          lsp = {
+            enabled = true,
+            async = false,
+            max_items = 10,
+          },
+          snippets = {
+            max_items = 3,
+          },
           copilot = {
             name = 'copilot',
             module = 'blink-copilot',
@@ -119,7 +127,11 @@ return {
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { sorts = {
+        'score',
+        'sort_text',
+        'label',
+      }, implementation = 'lua' },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },

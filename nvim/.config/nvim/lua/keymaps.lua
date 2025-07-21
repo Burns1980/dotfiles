@@ -29,7 +29,7 @@ vim.keymap.set('n', '<leader>J', ':jump<CR>', mergeTable(opts, { desc = 'Open ju
 vim.keymap.set('n', 'te', ':tabedit', mergeTable(opts, { desc = 'Open a new tab ' }))
 
 -- Split window
-vim.keymap.set('n', 'ss', ':split<CR>', mergeTable(opts, { desc = 'Split current window horizontally' }))
+vim.keymap.set('n', 'sH', ':split<CR>', mergeTable(opts, { desc = 'Split current window horizontally' }))
 vim.keymap.set('n', 'sv', ':vsplit<CR>', mergeTable(opts, { desc = 'Split current window vertically' }))
 
 -- Move window

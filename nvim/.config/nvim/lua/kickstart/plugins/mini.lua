@@ -1,6 +1,7 @@
 return {
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
+    version = false,
     config = function()
       -- Better Around/Inside textobjects
       --
@@ -15,22 +16,23 @@ return {
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup {
-        mappings = {
-          add = 'ys',
-          delete = 'ds',
-          find = '',
-          find_left = '',
-          highlight = '',
-          replace = 'cs',
-          update_n_lines = '',
-
-          -- Add this only if you don't want to use extended mappings
-          suffix_last = '',
-          suffix_next = '',
-        },
-        search_method = 'cover_or_next',
-      }
+      require('mini.surround').setup()
+      -- {
+      -- mappings = {
+      --   add = 'ys',
+      --   delete = 'ds',
+      --   find = '',
+      --   find_left = '',
+      --   highlight = '',
+      --   replace = 'cs',
+      --   update_n_lines = '',
+      --
+      --   -- Add this only if you don't want to use extended mappings
+      --   suffix_last = '',
+      --   suffix_next = '',
+      -- },
+      -- search_method = 'cover_or_next',
+      -- }
 
       require('mini.sessions').setup {
         autoread = false,
