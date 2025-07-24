@@ -98,6 +98,12 @@ return {
         desc = 'CopilotChat - Prompt actions',
       },
       {
+        '<leader>av',
+        ':CopilotChatVisual',
+        mode = 'x',
+        desc = 'CopilotChat - Open in vertical split',
+      },
+      {
         '<leader>af',
         function()
           require('CopilotChat').chat:focus()
@@ -153,6 +159,7 @@ return {
       -- Toggle Copilot Chat Vsplit
       { '<leader>at', '<cmd>CopilotChatToggle<cr>', desc = 'CopilotChat - Toggle' },
       { '<leader>ao', '<cmd>CopilotChatOpen<cr>', desc = 'CopilotChat - Open Copilot Chat' },
+      { '<leader>ac', '<cmd>CopilotChatClose<cr>', desc = 'CopilotChat - Close Copilot Chat' },
       -- Copilot Chat Models
       { '<leader>a?', '<cmd>CopilotChatModels<cr>', desc = 'CopilotChat - Select Models' },
       -- Copilot Chat Agents
