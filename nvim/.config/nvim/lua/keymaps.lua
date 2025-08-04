@@ -15,6 +15,7 @@ end
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('i', 'jj', '<Esc>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -26,10 +27,10 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G', { desc = 'Select all' })
 vim.keymap.set('n', '<leader>J', ':jump<CR>', mergeTable(opts, { desc = 'Open jumplist' }))
 
 --Open new tab
-vim.keymap.set('n', 'te', ':tabedit', mergeTable(opts, { desc = 'Open a new tab ' }))
+vim.keymap.set('n', 'tn', ':tabnew<CR>', mergeTable(opts, { desc = 'Open a new tab ' }))
 
 -- Split window
-vim.keymap.set('n', 'sH', ':split<CR>', mergeTable(opts, { desc = 'Split current window horizontally' }))
+vim.keymap.set('n', 'ss', ':split<CR>', mergeTable(opts, { desc = 'Split current window horizontally' }))
 vim.keymap.set('n', 'sv', ':vsplit<CR>', mergeTable(opts, { desc = 'Split current window vertically' }))
 
 -- Move window

@@ -8,6 +8,7 @@ vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 vim.o.number = true
+vim.opt.relativenumber = true
 vim.o.autoindent = true
 vim.o.smartindent = true
 -- Enable mouse mode, can be useful for resizing splits for example!
