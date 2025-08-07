@@ -39,6 +39,18 @@ vim.keymap.set('n', 'sl', '<C-w>L', mergeTable(opts, { desc = 'Move current wind
 vim.keymap.set('n', 'sj', '<C-w>J', mergeTable(opts, { desc = 'Move current window to far bottom' }))
 vim.keymap.set('n', 'sk', '<C-w>K', mergeTable(opts, { desc = 'Move current window to far top' }))
 
+-- Move buffer
+vim.keymap.set('n', '<leader>obm', function()
+  local picker = require 'window-picker'
+  local target_win = picker.pick_window {
+    include_current_win = false,
+  }
+  if target_win then
+    local buf = vim.api.nvim_get_current_buf()
+    vim.api.nvim_win_set_buf(target_win, buf)
+  end
+end, { desc = 'Move buffer to chosen window' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.

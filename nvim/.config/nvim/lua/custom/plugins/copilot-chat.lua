@@ -95,6 +95,7 @@ return {
             },
           }
         end,
+        mode = { 'n', 'v' },
         desc = 'CopilotChat - Prompt actions',
       },
       {
@@ -152,6 +153,7 @@ return {
             vim.cmd('CopilotChatBuffer ' .. input)
           end
         end,
+        mode = { 'n', 'v' },
         desc = 'CopilotChat - Quick chat',
       },
       -- Clear buffer and chat history
