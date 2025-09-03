@@ -4,10 +4,10 @@ return {
     event = 'VimEnter',
     version = '1.*',
     dependencies = {
-      { 'fang2hou/blink-copilot', opts = {
-        max_completions = 3,
-        max_attempts = 4,
-      } },
+      -- { 'fang2hou/blink-copilot', opts = {
+      --   max_completions = 3,
+      --   max_attempts = 4,
+      -- } },
       -- Snippet Engine
       {
         'L3MON4D3/LuaSnip',
@@ -93,12 +93,12 @@ return {
           snippets = {
             max_items = 3,
           },
-          copilot = {
-            name = 'copilot',
-            module = 'blink-copilot',
-            score_offset = 100,
-            async = true,
-          },
+          -- copilot = {
+          --   name = 'copilot',
+          --   module = 'blink-copilot',
+          --   score_offset = 100,
+          --   async = true,
+          -- },
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
         },
