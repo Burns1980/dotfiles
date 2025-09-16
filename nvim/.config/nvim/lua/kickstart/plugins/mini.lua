@@ -35,7 +35,8 @@ return {
 
       require('mini.sessions').setup {
         autoread = false,
-        autowrite = false,
+        autowrite = true,
+        file = 'SessionLocal.vim',
         -- hooks = {
         --   pre = {
         --     write = function()

@@ -27,6 +27,11 @@ vim.opt.viewoptions:remove 'options'
 -- Required for CoPilot
 vim.o.completeopt = 'menu,popup'
 
+-- Fold settings
+vim.o.foldmethod = 'indent'
+vim.o.foldlevel = 99
+vim.o.foldminlines = 4
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
