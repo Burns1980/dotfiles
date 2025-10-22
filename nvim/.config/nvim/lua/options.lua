@@ -24,6 +24,9 @@ vim.opt.laststatus = 3
 
 vim.opt.viewoptions:remove 'options'
 
+-- prevents tab from being used for anything other than indentation
+vim.keymap.del('i', '<Tab>')
+
 -- Required for CoPilot
 vim.o.completeopt = 'menu,popup'
 
