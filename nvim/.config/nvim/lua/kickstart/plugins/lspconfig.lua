@@ -225,7 +225,8 @@ return {
         cssls = {},
         html = {},
         postgres_lsp = {
-          cmd = { 'postgrestools', 'lsp-proxy', 'postgrestools', 'start' },
+          -- cmd = { 'postgrestools', 'lsp-proxy', 'postgrestools', 'start' },
+          cmd = { 'postgres-language-server', 'lsp-proxy', 'postgres-language-server', 'start' },
         },
         tailwindcss = {},
         lua_ls = {
