@@ -42,6 +42,7 @@ return {
         json = { 'prettierd', 'prettier', stop_after_first = true },
         sql = { 'sql_formatter', 'pg_format', stop_after_first = true },
         yaml = { 'prettierd' },
+        markdown = { 'prettierd', 'prettier' },
       },
       formatters = {
         sql_formatter = {

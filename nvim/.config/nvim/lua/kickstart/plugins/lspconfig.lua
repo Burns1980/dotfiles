@@ -223,6 +223,7 @@ return {
         ts_ls = {},
         eslint = {},
         cssls = {},
+        marksman = {},
         html = {},
         postgres_lsp = {
           -- cmd = { 'postgrestools', 'lsp-proxy', 'postgrestools', 'start' },
@@ -263,6 +264,7 @@ return {
         'stylua', -- Used to format Lua code
         'eslint',
         'ts_ls',
+        'marksman',
         'postgres_lsp',
         'tailwindcss',
         'cssls',
