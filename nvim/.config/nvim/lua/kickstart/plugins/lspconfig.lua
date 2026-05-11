@@ -221,6 +221,7 @@ return {
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
+        markdownlint = {},
         eslint = {},
         cssls = {},
         marksman = {},
@@ -262,6 +263,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'markdownlint',
         'eslint',
         'ts_ls',
         'marksman',
