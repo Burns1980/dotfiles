@@ -3,3 +3,6 @@
 	name = Burns1980
 [core]
 	editor = nvim
+[push]
+	default = simple
+	autoSetupRemote = true
