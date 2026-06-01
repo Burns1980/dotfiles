@@ -15,7 +15,6 @@ return {
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
-    commit = '782dda9',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
@@ -200,15 +199,24 @@ return {
       --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+      -- Enable the following language servers.
+      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed
+      --  via mason-tool-installer (which reads `vim.tbl_keys(servers)` below) and auto-enabled by
+      --  mason-lspconfig (v2.x's `automatic_enable` calls `vim.lsp.enable()` after install).
       --
-      --  Add any additional override configuration in the following tables. Available keys are:
+      --  Add any additional override configuration in the following table. Each entry is passed to
+      --  `vim.lsp.config(server_name, ...)`; available keys mirror the LSP config schema:
       --  - cmd (table): Override the default command used to start the server
       --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
+      --  - capabilities (table): Override fields in capabilities (the '*' wildcard below provides
+      --        blink.cmp capabilities to every server; this is for per-server tweaks)
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      --  - root_markers (string[]): Filename markers used to discover the project root. Lists
+      --        REPLACE upstream defaults (deep-merge replaces arrays wholesale), which is
+      --        load-bearing for ts_ls/denols routing: nvim-lspconfig's denols default includes
+      --        '.git', so without an explicit override denols would attach to every TS file in a
+      --        git repo. See https://docs.deno.com/runtime/getting_started/setup_your_environment/
       local servers = {
         -- clangd = {},
         -- gopls = {},
@@ -220,15 +228,52 @@ return {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = {},
+        -- ts_ls / denols configured per Deno's official Neovim docs:
+        --   https://docs.deno.com/runtime/getting_started/setup_your_environment/#neovim-0.6+-using-the-built-in-language-server
+        -- Each gets a distinct root marker so they don't both attach to the
+        -- same buffer. ts_ls additionally sets single_file_support = false to
+        -- prevent it from running in single-file mode on lone TS files.
+        ts_ls = {
+          root_markers = { 'package.json' },
+          single_file_support = false,
+        },
+        denols = {
+          root_markers = { 'deno.json', 'deno.jsonc' },
+        },
         markdownlint = {},
         eslint = {},
         cssls = {},
         marksman = {},
         html = {},
         postgres_lsp = {
-          -- cmd = { 'postgrestools', 'lsp-proxy', 'postgrestools', 'start' },
-          cmd = { 'postgres-language-server', 'lsp-proxy', 'postgres-language-server', 'start' },
+          -- The previous cmd overrides were malformed (extra positional args
+          -- after `lsp-proxy` caused the binary to exit with
+          -- "`postgres-language-server` is not expected in this context").
+          -- Falling back to lspconfig's default cmd: `{ 'postgres-language-server', 'lsp-proxy' }`.
+          --
+          -- root_dir handles two cases:
+          --   1. Normal SQL files in a project — walks up from the file looking
+          --      for postgres-language-server.jsonc (or the legacy
+          --      postgrestools.jsonc filename, kept for projects mid-rename).
+          --   2. vim-dadbod-ui query buffers — these live under
+          --      ~/.local/share/db_ui/ (or are unnamed scratch buffers), so
+          --      walking up from the buffer's own file never reaches the
+          --      project. Falls back to walking up from cwd, which gives
+          --      postgres_lsp the full project config (typecheck, db connection,
+          --      pglinter rules) whenever nvim was launched from the project
+          --      root.
+          root_dir = function(bufnr, on_dir)
+            local markers = { 'postgres-language-server.jsonc', 'postgrestools.jsonc' }
+            local root = vim.fs.root(bufnr, markers)
+            if root then
+              return on_dir(root)
+            end
+            local found = vim.fs.find(markers, { path = vim.fn.getcwd(), upward = true, type = 'file' })[1]
+            if found then
+              return on_dir(vim.fs.dirname(found))
+            end
+            on_dir(nil)
+          end,
         },
         tailwindcss = {},
         lua_ls = {
@@ -274,20 +319,22 @@ return {
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      -- Register per-server config via the native vim.lsp.config() API (Neovim 0.11+).
+      -- mason-lspconfig v2.0 removed the `handlers` setup field and now auto-enables
+      -- installed servers via vim.lsp.enable() (its `automatic_enable` defaults to true).
+      -- We pre-register configs here so they're in place when servers are enabled.
+      --
+      -- The '*' wildcard provides blink.cmp capabilities to every server; per-server
+      -- entries layer on top via deep merge.
+      vim.lsp.config('*', { capabilities = capabilities })
+      for server_name, server_config in pairs(servers) do
+        vim.lsp.config(server_name, server_config)
+      end
+
       ---@diagnostic disable-next-line: missing-fields
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
       }
     end,
   },

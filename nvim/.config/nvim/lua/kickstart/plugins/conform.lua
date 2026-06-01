@@ -36,29 +36,36 @@ return {
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = function(bufnr)
+          local path = vim.api.nvim_buf_get_name(bufnr)
+          if path:find('/supabase/functions/', 1, true) then
+            return { 'deno_fmt' }
+          end
+          return { 'prettierd', 'prettier', stop_after_first = true }
+        end,
         javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = function(bufnr)
+          local path = vim.api.nvim_buf_get_name(bufnr)
+          if path:find('/supabase/functions/', 1, true) then
+            return { 'deno_fmt' }
+          end
+          return { 'prettierd', 'prettier', stop_after_first = true }
+        end,
         json = { 'prettierd', 'prettier', stop_after_first = true },
-        sql = { 'sql_formatter', 'pg_format', stop_after_first = true },
         yaml = { 'prettierd' },
         markdown = { 'prettierd', 'prettier' },
       },
       formatters = {
-        sql_formatter = {
-          exe = 'sql-formatter',
-        },
-        pg_format = {
-          prepend_args = {
-            '--spaces',
-            '2',
-            '--no-space-function',
-            '--wrap-limit',
-            '80',
-            '--nogrouping',
-            '--keep-newline',
-            '--comma-break',
-          },
+        -- deno fmt discovers its config (the `fmt` block in deno.json) by
+        -- walking up from cwd. Conform's built-in `deno_fmt` doesn't set cwd,
+        -- so it inherits Neovim's cwd — which in a hybrid Node/Deno project
+        -- is usually the Node root and has no deno.json to find. Anchoring
+        -- cwd at the closest deno.json/jsonc ancestor lets deno fmt actually
+        -- pick up `singleQuote`, `lineWidth`, etc. from the project config.
+        deno_fmt = {
+          cwd = function(_, ctx)
+            return vim.fs.root(ctx.buf, { 'deno.json', 'deno.jsonc' })
+          end,
         },
       },
     },

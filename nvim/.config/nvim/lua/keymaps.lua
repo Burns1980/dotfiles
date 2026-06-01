@@ -72,6 +72,39 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<leader>m', ':Mason<CR>', { desc = '[M]ason' })
 vim.keymap.set('n', '<leader>l', ':Lazy<CR>', { desc = '[L]azy' })
 
+-- Deno: denols requires `deno cache <file>` once per file with new external
+-- imports (jsr:, npm:, https:) before its diagnostics resolve.
+vim.api.nvim_create_user_command('DenoCache', function()
+  vim.fn.system { 'deno', 'cache', vim.fn.expand '%' }
+  vim.cmd.edit()
+end, { desc = 'Run `deno cache` on the current file and reload it' })
+
+vim.keymap.set('n', '<leader>Dc', '<cmd>DenoCache<cr>', { desc = '[D]eno [C]ache current file' })
+
+-- Auto-cache Deno files on load so denols can resolve external imports without
+-- a manual <leader>Dc. Async via vim.system (Neovim 0.10+) so the UI never blocks.
+-- Scoped by path to /supabase/functions/ — won't fire on Node TS files.
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = vim.api.nvim_create_augroup('deno-auto-cache', { clear = true }),
+  desc = 'Run `deno cache` on Deno files (supabase/functions/) when loaded',
+  callback = function(args)
+    local path = vim.api.nvim_buf_get_name(args.buf)
+    if path == '' or not path:find('/supabase/functions/', 1, true) then
+      return
+    end
+    if not path:match '%.[jt]sx?$' then
+      return
+    end
+    vim.system({ 'deno', 'cache', path }, { text = true }, function(out)
+      if out.code ~= 0 then
+        vim.schedule(function()
+          vim.notify('deno cache failed for ' .. vim.fn.fnamemodify(path, ':t') .. ':\n' .. (out.stderr or ''), vim.log.levels.WARN)
+        end)
+      end
+    end)
+  end,
+})
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
