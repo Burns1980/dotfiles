@@ -241,7 +241,39 @@ return {
           root_markers = { 'deno.json', 'deno.jsonc' },
         },
         markdownlint = {},
-        eslint = {},
+        eslint = {
+          -- The upstream eslint root_dir (see nvim-lspconfig lsp/eslint.lua)
+          -- bails out (no attach) if it finds ANY of deno.json/deno.jsonc/deno.lock
+          -- upward from the buffer. This project keeps a stray deno.lock at the
+          -- repo root for the supabase edge functions, which disabled eslint
+          -- across the whole Node project. Defer to Deno only where Deno actually
+          -- roots a project (deno.json/deno.jsonc) -- matching the denols
+          -- root_markers above -- and otherwise root eslint at the nearest
+          -- eslint config file.
+          root_dir = function(bufnr, on_dir)
+            if vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' }) then
+              return
+            end
+            local eslint_config_files = {
+              '.eslintrc',
+              '.eslintrc.js',
+              '.eslintrc.cjs',
+              '.eslintrc.yaml',
+              '.eslintrc.yml',
+              '.eslintrc.json',
+              'eslint.config.js',
+              'eslint.config.mjs',
+              'eslint.config.cjs',
+              'eslint.config.ts',
+              'eslint.config.mts',
+              'eslint.config.cts',
+            }
+            local root = vim.fs.root(bufnr, eslint_config_files)
+            if root then
+              on_dir(root)
+            end
+          end,
+        },
         cssls = {},
         marksman = {},
         html = {},
